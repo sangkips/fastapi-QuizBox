@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "quizbox"
+version = "0.1.0"
+description = "Question and Answer forum"
+authors = ["sangkips <sangkipkoech@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = "^0.20.0"
+fastapi = "^0.88.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
