@@ -3,17 +3,15 @@ import fastapi
 
 router = fastapi.APIRouter()
 
-tags = []
-
 
 @router.get("/tags", tags=["Tags"])
 async def get_all_tags():
-    return tags
+    pass
 
 
 @router.get("/tags, {tag_id}", tags=["Tags"])
-async def get_single_tag(tag_id: int):
-    return tags[tag_id]
+async def get_single_tag():
+    pass
 
 
 @router.post("/tags", tags=["Tags"])
