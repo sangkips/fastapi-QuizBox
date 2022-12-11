@@ -1,5 +1,5 @@
 import fastapi
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, status
 from typing import List
 
 from sqlalchemy.orm import Session
@@ -26,10 +26,8 @@ async def get_single_user():
 
 @router.post("/users", response_model=User, tags=["Users"])
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = get_user_by_email(db, email=user.email)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    return create_new_user(db=db, user=user)
+    new_user = create_user(db=db, user=user)
+    return new_user
 
 
 @router.put("/users, {user_id}", tags=["Users"])
