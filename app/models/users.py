@@ -10,8 +10,8 @@ class User(Timestamp, Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(50), unique=True, index=True, nullable=False)
-    hashed_password = Column(String)
-    is_active = Column(Boolean, default=False)
+    hashed_password = Column(String, nullable=False)
+    is_active = Column(Boolean, default=True)
 
     profile = relationship("Profile", back_populates="owner", uselist=False)
 

@@ -8,12 +8,12 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    password: str
+    hashed_password: str
 
 
 class User(UserBase):
     id: int
-    is_active: bool
+    is_active: bool | None = None
     created_at: datetime
     updated_at: datetime
 
