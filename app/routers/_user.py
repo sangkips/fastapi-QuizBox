@@ -20,8 +20,13 @@ async def get_all_users(skip: int = 0, limit: int = 100, db: Session = Depends(g
 
 
 @router.get("/users, {user_id}", tags=["Users"])
-async def get_single_user():
-    pass
+async def get_single_user(user_id: int, db: Session = Depends(get_db)):
+    user = get_user(db=db, user_id=user_id)
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist"
+        )
+    return user
 
 
 @router.post("/users", response_model=User, tags=["Users"])
