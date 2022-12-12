@@ -8,8 +8,8 @@ def get_question(db: Session, question_id: int):
     return question_query
 
 
-def get_questions(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(Question).offset(skip).limit(limit).all()
+def get_questions(db: Session):
+    return db.query(Question).all()
 
 
 def create_question(db: Session, question: QuestionCreate):

@@ -13,14 +13,14 @@ from app.db.database import get_db
 router = fastapi.APIRouter()
 
 # get all users from the database(100 records at a time)
-@router.get("/users", response_model=List[User], tags=["Users"])
+@router.get("/api/v1/users", response_model=List[User], tags=["Users"])
 async def get_all_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = get_users(db, skip=skip, limit=limit)
     return users
 
 
 # get a single user by id
-@router.get("/user/{user_id}", tags=["Users"])
+@router.get("/api/v1/user/{user_id}", tags=["Users"])
 async def get_single_user(user_id: int, db: Session = Depends(get_db)):
     user = get_user(db=db, user_id=user_id)
     if user is None:
@@ -32,7 +32,10 @@ async def get_single_user(user_id: int, db: Session = Depends(get_db)):
 
 # create a new user
 @router.post(
-    "/user", response_model=User, tags=["Users"], status_code=status.HTTP_201_CREATED
+    "/api/v1/user",
+    response_model=User,
+    tags=["Users"],
+    status_code=status.HTTP_201_CREATED,
 )
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     new_user = get_user_by_email(db=db, email=user.email)

@@ -1,17 +1,15 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
 
-class UserBase(BaseModel):
+class TagBase(BaseModel):
     name: str
 
 
-class UserCreate(UserBase):
+class TagCreate(TagBase):
     ...
 
 
-class User(UserBase):
+class Tag(TagBase):
     id: int
 
     class Config:

@@ -29,7 +29,7 @@ async def get_single_question():
 
 
 @router.post(
-    "/questions",
+    "api/v1/questions",
     response_model=Question,
     tags=["Questions"],
     status_code=status.HTTP_201_CREATED,
