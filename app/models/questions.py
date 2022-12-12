@@ -14,5 +14,4 @@ class Question(Timestamp, Base):
     title = Column(String(100), nullable=False, index=True)
     body = Column(Text, nullable=False, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
-    ask_by = relationship(User)
     tag_id = Column(Integer, ForeignKey("tags.id"), nullable=False)

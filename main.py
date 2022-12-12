@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import _user, answer, question, tag, vote
+from app.routers import answer, question, tag, user, vote
 from app.db.database import engine
 from app.models import answers, questions, tags, users, votes
 
@@ -16,5 +16,5 @@ app = FastAPI(title="QuizBox")
 app.include_router(answer.router)
 app.include_router(question.router)
 app.include_router(tag.router)
-app.include_router(_user.router)
+app.include_router(user.router)
 app.include_router(vote.router)
