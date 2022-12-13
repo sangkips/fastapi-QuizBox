@@ -4,7 +4,7 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-
+from app.schema._question import Question
 from app.schema._user import UserCreate, User, UserEdit
 from app.utils.user_crud import (
     get_user,
@@ -12,6 +12,7 @@ from app.utils.user_crud import (
     get_users,
     create_user,
 )
+from app.utils.question_crud import get_user_questions
 from app.db.database import get_db
 
 
@@ -33,6 +34,15 @@ async def get_single_user(user_id: int, db: Session = Depends(get_db)):
             status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist"
         )
     return user
+
+
+# get queations beloging to a given user
+@router.get(
+    "/api/users/{user_id}/questions", response_model=List[Question], tags=["Users"]
+)
+async def get_question_by_given_user(user_id: int, db: Session = Depends(get_db)):
+    questions = get_user_questions(user_id=user_id, db=db)
+    return questions
 
 
 # create a new user

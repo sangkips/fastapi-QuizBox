@@ -23,3 +23,7 @@ def create_question(db: Session, question: QuestionCreate):
     db.commit()
     db.refresh(db_question)
     return db_question
+
+
+def get_user_questions(db: Session, user_id: int):
+    return db.query(Question).filter(Question.user_id == user_id).all()
