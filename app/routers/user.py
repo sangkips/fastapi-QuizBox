@@ -6,7 +6,13 @@ from sqlalchemy.orm import Session
 
 
 from app.schema._user import UserCreate, User
-from app.utils.user_crud import get_user, get_user_by_email, get_users, create_user
+from app.utils.user_crud import (
+    get_user,
+    get_user_by_email,
+    get_users,
+    create_user,
+    delete_user,
+)
 from app.db.database import get_db
 
 
@@ -55,7 +61,13 @@ async def update_user():
 
 # delete user
 @router.delete(
-    "/users, {user_id}", tags=["Users"], status_code=status.HTTP_204_NO_CONTENT
+    "/api/v1/users/{user_id}",
+    tags=["Users"],
 )
-async def delete_user():
-    pass
+async def delete_current_user(user_id: int, db: Session = Depends(get_db)):
+    user = get_user(db, user_id)
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist"
+        )
+    return {"message": "Successfully deleted the user"}
