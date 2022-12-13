@@ -5,13 +5,12 @@ from typing import List
 from sqlalchemy.orm import Session
 
 
-from app.schema._user import UserCreate, User
+from app.schema._user import UserCreate, User, UserEdit
 from app.utils.user_crud import (
     get_user,
     get_user_by_email,
     get_users,
     create_user,
-    delete_user,
 )
 from app.db.database import get_db
 
@@ -53,11 +52,21 @@ def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db=db, user=user)
 
 
+""" 
 # update user based on a given id
 @router.put("/users, {user_id}", tags=["Users"])
-async def update_user():
-    pass
+async def update_user(user_id: int, user: UserEdit, db: Session = Depends(get_db)):
+    db_user = get_user(db, user_id)
+    if db_user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="user does not exist"
+        )
 
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+ """
 
 # delete user
 @router.delete(
@@ -70,4 +79,7 @@ async def delete_current_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist"
         )
+    db.delete(user)
+    db.commit()
+
     return {"message": "Successfully deleted the user"}

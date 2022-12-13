@@ -23,13 +23,18 @@ async def get_all_questions(db: Session = Depends(get_db)):
     return questions
 
 
-@router.get("/questions, {question_id}", tags=["Questions"])
-async def get_single_question():
-    pass
+@router.get("/api/v1/questions/{question_id}", tags=["Questions"])
+async def get_single_question(question_id: int, db: Session = Depends(get_db)):
+    question = get_question(db=db, question_id=question_id)
+    if question is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Question not found"
+        )
+    return question
 
 
 @router.post(
-    "api/v1/questions",
+    "/api/v1/questions",
     response_model=Question,
     tags=["Questions"],
     status_code=status.HTTP_201_CREATED,
@@ -39,11 +44,22 @@ async def create_new_question(question: QuestionCreate, db: Session = Depends(ge
     return new_question
 
 
-@router.put("/questions, {question_id}", tags=["Questions"])
+@router.put("/api/v1/questions/{question_id}", tags=["Questions"])
 async def update_question():
     pass
 
 
-@router.delete("/questions, {question_id}", tags=["Questions"])
-async def delete_question():
-    pass
+@router.delete(
+    "/api/v1/questions/{question_id}",
+    tags=["Questions"],
+)
+async def delete_question(question_id: int, db: Session = Depends(get_db)):
+    question = get_question(db, question_id)
+    if question is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Question does not exist"
+        )
+    db.delete(question)
+    db.commit()
+
+    return {"message": "Successfully deleted the question"}

@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 
 from app.schema._tag import TagCreate, Tag
-from app.utils.tag_crud import get_tag, create_tag, get_tags, update_tag
+from app.utils.tag_crud import get_tag, create_tag, get_tags
 from app.db.database import get_db
 
 

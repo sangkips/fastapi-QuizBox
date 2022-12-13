@@ -24,6 +24,7 @@ def create_user(db: Session, user: UserCreate):
     return db_user
 
 
+"""  
 # update user crud
 def edit_user(db: Session, user_id: int, user: UserEdit):
     db_user = get_user(db, user_id)
@@ -34,10 +35,13 @@ def edit_user(db: Session, user_id: int, user: UserEdit):
     return db_user
 
 
+ 
 # delete user
 def delete_user(db: Session, user_id: int):
     user = get_user(db=db, user_id=user_id)
 
     db.delete(user)
     db.commit()
+    db.refresh(user)
     return user
+"""

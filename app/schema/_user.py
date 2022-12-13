@@ -13,7 +13,7 @@ class UserCreate(UserBase):
 
 
 class UserEdit(UserBase):
-    password: Optional[str] = None
+    bio: Optional[str] = None
 
 
 class User(UserBase):
