@@ -40,7 +40,7 @@ async def get_single_user(user_id: int, db: Session = Depends(get_db)):
 @router.get(
     "/api/users/{user_id}/questions", response_model=List[Question], tags=["Users"]
 )
-async def get_question_by_given_user(user_id: int, db: Session = Depends(get_db)):
+async def get_questions_for_given_user(user_id: int, db: Session = Depends(get_db)):
     questions = get_user_questions(user_id=user_id, db=db)
     return questions
 

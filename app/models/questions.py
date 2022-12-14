@@ -1,8 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Text
-from sqlalchemy.orm import relationship
 from app.db.database import Base
-from .users import User
-from .tags import Tag
 
 from .mixins import Timestamp
 
@@ -14,4 +11,5 @@ class Question(Timestamp, Base):
     title = Column(String(100), nullable=False, index=True)
     body = Column(Text, nullable=False, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
-    tag_id = Column(Integer, ForeignKey("tags.id"), nullable=False)
+    tag_id = Column(Integer, ForeignKey("tags.id"), nullable=False, index=True)
+    vote_id = Column(Integer, ForeignKey("votes.id"), nullable=False, index=True)

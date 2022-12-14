@@ -37,7 +37,7 @@ async def get_single_tag(tag_id: int, db: Session = Depends(get_db)):
 
 # create new tag and post to the database
 @router.post(
-    "api/v1/tags",
+    "/api/v1/tags",
     response_model=Tag,
     status_code=status.HTTP_201_CREATED,
     tags=["Tags"],
@@ -47,6 +47,7 @@ async def create_new_tag(tag: TagCreate, db: Session = Depends(get_db)):
     return db_tag
 
 
+"""  
 # update single tag by id
 @router.put(
     "/api/v1/tags, {tag_id}",
@@ -58,7 +59,7 @@ async def update_current_tag(tag: Tag, db: Session = Depends(get_db)):
     updated_tag = update_tag(db=db, name=tag.name)
 
     return updated_tag
-
+"""
 
 # delete a given tag using its id
 @router.delete(
