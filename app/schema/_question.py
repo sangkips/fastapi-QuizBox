@@ -8,7 +8,7 @@ class QuestionBase(BaseModel):
     body: str
     user_id: int
     tag_id: int
-    vote_id: int
+    vote_id: int | None = None
 
 
 class QuestionCreate(QuestionBase):
@@ -17,8 +17,6 @@ class QuestionCreate(QuestionBase):
 
 class Question(QuestionBase):
     id: int
-    # created_at: datetime
-    # updated_at: datetime
 
     class Config:
         orm_mode = True

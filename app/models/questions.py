@@ -12,4 +12,4 @@ class Question(Timestamp, Base):
     body = Column(Text, nullable=False, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     tag_id = Column(Integer, ForeignKey("tags.id"), nullable=False, index=True)
-    vote_id = Column(Integer, ForeignKey("votes.id"), nullable=False, index=True)
+    vote_id = Column(Integer, ForeignKey("votes.id"), nullable=True, index=True)

@@ -67,5 +67,13 @@ async def update_current_tag(tag: Tag, db: Session = Depends(get_db)):
     response_model=Tag,
     tags=["Tags"],
 )
-async def delete_tag():
-    pass
+async def delete_tag(tag_id: int, db: Session = Depends(get_db)):
+    tag = get_tag(db, tag_id)
+    if tag is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Tag does not exist"
+        )
+    db.delete(tag)
+    db.commit()
+    db.refresh(tag)
+    return tag

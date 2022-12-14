@@ -2,8 +2,8 @@ from pydantic import BaseModel
 
 
 class VoteBase(BaseModel):
-    question_id: int
-    answer_id: int
+    question_id: int | None = None
+    answer_id: int | None = None
     user_id: int
     like: int
 
