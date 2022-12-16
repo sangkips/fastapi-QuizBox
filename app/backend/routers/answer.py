@@ -5,9 +5,9 @@ from typing import List
 from sqlalchemy.orm import Session
 
 
-from app.backend.schema._answer import AnswerCreate, Answer
-from app.backend.utils.answer_crud import get_answer, get_answers, create_answer
-from app.backend.db.database import get_db
+from schema._answer import AnswerCreate, Answer
+from utils.answer_crud import get_answer, get_answers, create_answer
+from db.database import get_db
 
 
 router = fastapi.APIRouter()

@@ -5,13 +5,13 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-from app.backend.schema._vote import VoteCreate, Vote
-from app.backend.utils.vote_crud import (
+from schema._vote import VoteCreate, Vote
+from utils.vote_crud import (
     get_vote,
     get_votes,
     create_vote,
 )
-from app.backend.db.database import get_db
+from db.database import get_db
 
 router = fastapi.APIRouter()
 

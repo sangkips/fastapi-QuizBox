@@ -6,14 +6,16 @@ from typing import List
 from sqlalchemy.orm import Session
 
 
-from app.backend.schema._tag import TagCreate, Tag
-from app.backend.utils.tag_crud import get_tag, create_tag, get_tags
-from app.backend.db.database import get_db
+from schema._tag import TagCreate, Tag
+from utils.tag_crud import get_tag, create_tag, get_tags
+from db.database import get_db
 
 
 router = fastapi.APIRouter()
 
 # retrieve all tags from the database
+
+
 @router.get(
     "/api/v1/tags",
     response_model=List[Tag],
@@ -62,6 +64,8 @@ async def update_current_tag(tag: Tag, db: Session = Depends(get_db)):
 """
 
 # delete a given tag using its id
+
+
 @router.delete(
     "/api/v1/tags/{tag_id}",
     response_model=Tag,

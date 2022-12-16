@@ -4,21 +4,23 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-from app.backend.schema._question import Question
-from app.backend.schema._user import UserCreate, User, UserEdit
-from app.backend.utils.user_crud import (
+from schema._question import Question
+from schema._user import UserCreate, User, UserEdit
+from utils.user_crud import (
     get_user,
     get_user_by_email,
     get_users,
     create_user,
 )
-from app.backend.utils.question_crud import get_user_questions
-from app.backend.db.database import get_db
+from utils.question_crud import get_user_questions
+from db.database import get_db
 
 
 router = fastapi.APIRouter()
 
 # get all users from the database(100 records at a time)
+
+
 @router.get("/api/v1/users", response_model=List[User], tags=["Users"])
 async def get_all_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = get_users(db, skip=skip, limit=limit)
@@ -79,6 +81,8 @@ async def update_user(user_id: int, user: UserEdit, db: Session = Depends(get_db
 """
 
 # delete user
+
+
 @router.delete(
     "/api/v1/users/{user_id}",
     tags=["Users"],
