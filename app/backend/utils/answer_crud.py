@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.answers import Answer
-from app.schema._answer import AnswerCreate
+from app.backend.models.answers import Answer
+from app.backend.schema._answer import AnswerCreate
 
 
 def get_answer(db: Session, answer_id: int):

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from app.db.database import Base
+from app.backend.db.database import Base
 
 from .mixins import Timestamp
 

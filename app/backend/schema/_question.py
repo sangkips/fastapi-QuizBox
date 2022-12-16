@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
 
@@ -13,6 +11,11 @@ class QuestionBase(BaseModel):
 
 class QuestionCreate(QuestionBase):
     ...
+
+
+class QuestionEdit(QuestionBase):
+    title: str
+    body: str
 
 
 class Question(QuestionBase):

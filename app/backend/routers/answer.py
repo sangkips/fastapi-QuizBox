@@ -5,9 +5,9 @@ from typing import List
 from sqlalchemy.orm import Session
 
 
-from app.schema._answer import AnswerCreate, Answer
-from app.utils.answer_crud import get_answer, get_answers, create_answer
-from app.db.database import get_db
+from app.backend.schema._answer import AnswerCreate, Answer
+from app.backend.utils.answer_crud import get_answer, get_answers, create_answer
+from app.backend.db.database import get_db
 
 
 router = fastapi.APIRouter()
@@ -35,9 +35,11 @@ async def create_new_answer(answer: AnswerCreate, db: Session = Depends(get_db))
     return new_answer
 
 
+"""  
 @router.put("/api/v1/answers/{answer_id}", tags=["Answers"])
 async def update_answer():
     pass
+"""
 
 
 @router.delete("/api/v1/answers/{answer_id}", response_model=Answer, tags=["Answers"])
