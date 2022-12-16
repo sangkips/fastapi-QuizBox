@@ -4,16 +4,16 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-from app.schema._question import Question
-from app.schema._user import UserCreate, User, UserEdit
-from app.utils.user_crud import (
+from app.backend.schema._question import Question
+from app.backend.schema._user import UserCreate, User, UserEdit
+from app.backend.utils.user_crud import (
     get_user,
     get_user_by_email,
     get_users,
     create_user,
 )
-from app.utils.question_crud import get_user_questions
-from app.db.database import get_db
+from app.backend.utils.question_crud import get_user_questions
+from app.backend.db.database import get_db
 
 
 router = fastapi.APIRouter()
@@ -62,21 +62,21 @@ def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db=db, user=user)
 
 
-""" 
+"""  
 # update user based on a given id
-@router.put("/users, {user_id}", tags=["Users"])
+@router.put("/users/{user_id}", tags=["Users"])
 async def update_user(user_id: int, user: UserEdit, db: Session = Depends(get_db)):
-    db_user = get_user(db, user_id)
+    db_user = get_user(db, user_id, user)
     if db_user is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="user does not exist"
+            status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist"
         )
 
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
- """
+"""
 
 # delete user
 @router.delete(

@@ -5,9 +5,9 @@ from typing import List
 from sqlalchemy.orm import Session
 
 
-from app.schema._question import QuestionCreate, Question
-from app.utils.question_crud import get_question, get_questions, create_question
-from app.db.database import get_db
+from app.backend.schema._question import QuestionCreate, Question, QuestionEdit
+from app.backend.utils.question_crud import get_question, get_questions, create_question
+from app.backend.db.database import get_db
 
 router = fastapi.APIRouter()
 
@@ -44,9 +44,14 @@ async def create_new_question(question: QuestionCreate, db: Session = Depends(ge
     return new_question
 
 
-@router.put("/api/v1/questions/{question_id}", tags=["Questions"])
-async def update_question():
-    pass
+@router.patch("/api/v1/questions/{question_id}", tags=["Questions"])
+async def update_question(question: QuestionEdit, db: Session = Depends(get_db)):
+    question_to_update = Question(db, question)
+    if question_to_update is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Question does not exist"
+        )
+    return question_to_update
 
 
 @router.delete(

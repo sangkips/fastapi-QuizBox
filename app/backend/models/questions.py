@@ -1,5 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Text
-from app.db.database import Base
+from app.backend.db.database import Base
 
 from .mixins import Timestamp
 
