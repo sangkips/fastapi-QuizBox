@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.votes import Vote
-from app.schema._vote import VoteCreate
+from app.backend.models.votes import Vote
+from app.backend.schema._vote import VoteCreate
 
 
 def get_vote(db: Session, user_id: int):

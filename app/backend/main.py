@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-from app.routers import answer, question, tag, user, vote
-from app.db.database import engine
-from app.models import answers, questions, tags, users, votes
+from app.backend.routers import answer, question, tag, user, vote
+from app.backend.db.database import engine
+from app.backend.models import answers, questions, tags, users, votes
 
 answers.Base.metadata.create_all(bind=engine)
 questions.Base.metadata.create_all(bind=engine)

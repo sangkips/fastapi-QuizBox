@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
-from app.db.database import Base
+from app.backend.db.database import Base
 
 from .mixins import Timestamp
 
@@ -13,7 +13,9 @@ class User(Timestamp, Base):
     password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
 
-    profile = relationship("Profile", back_populates="owner", uselist=False)
+    profile = relationship(
+        "Profile", back_populates="owner", uselist=False, cascade="all, delete-orphan"
+    )
 
 
 class Profile(Timestamp, Base):

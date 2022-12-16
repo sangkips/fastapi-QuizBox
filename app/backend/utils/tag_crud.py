@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.tags import Tag
-from app.schema._tag import TagCreate
+from app.backend.models.tags import Tag
+from app.backend.schema._tag import TagCreate
 
 
 def get_tag(db: Session, tag_id: int):
