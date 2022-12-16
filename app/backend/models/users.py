@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
-from app.backend.db.database import Base
+from db.database import Base
 
 from .mixins import Timestamp
 

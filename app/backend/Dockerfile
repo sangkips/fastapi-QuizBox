@@ -3,7 +3,7 @@ FROM python:3.9.10-slim
 ENV PYTHONUNBUFFERED 1
 
 EXPOSE 8000
-WORKDIR /app
+WORKDIR /usr/src/app
 
 
 RUN apt-get update && \

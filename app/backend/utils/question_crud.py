@@ -1,10 +1,11 @@
 from sqlalchemy.orm import Session
-from app.backend.models.questions import Question
-from app.backend.schema._question import QuestionCreate
+from models.questions import Question
+from schema._question import QuestionCreate
 
 
 def get_question(db: Session, question_id: int):
-    question_query = db.query(Question).filter(Question.id == question_id).first()
+    question_query = db.query(Question).filter(
+        Question.id == question_id).first()
     return question_query
 
 

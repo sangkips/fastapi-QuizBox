@@ -1,13 +1,13 @@
-version: "3"
+version: "3.9"
 
 services:
-  app:
+  backend:
     build: .
     restart: on-failure
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db/postgres"
+      DATABASE_URL: " postgresql://quizboxuser@localhost:5432/quizbox"
     env_file:
       - .env
     depends_on:
