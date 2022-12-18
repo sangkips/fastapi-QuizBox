@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  backend:
+    image: backend
+    build:
+      context: ./app/backend
+      dockerfile: Dockerfile
+    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8000
+      - DATABASE_URL=postgresql+psycopg2://postgresquiz@mydb:5432/myapp
+   
+    ports:
+      - 8000:8000
+    
+    volumes:
+      - ./app/backend:/app/backend
+    depends_on:
+      - db
+  
+  frontend:
+    image: frontend
+    build:
+      context: ./app/frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    command: npm run serve
+    volumes:
+      - frontend:/app
+
+  db:
+    image: postgres:14.5
+    environment:
+      - POSTGRES_USER=postgresquiz
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=myapp
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  frontend:
+  postgres_data:

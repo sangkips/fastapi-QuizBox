@@ -1,27 +1,17 @@
-# Python base image. Get this from dockerhub
 FROM python:3.11-slim
 
-# Set environment variables
-ENV PYTHONUNBUFFERED 1
-
-EXPOSE 8000
-# Set your working directory
-WORKDIR /usr/src/app
-
-# Install dependencies required by the image
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends netcat && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /code
 
 
-COPY poetry.lock pyproject.toml ./
-RUN pip install poetry==1.1 && \
-    poetry config virtualenvs.in-project true && \
-    poetry install --no-dev
+COPY ./requirements.txt /code/requirements.txt
 
-# Copy and mount the project to the working directory
-COPY . ./
 
-CMD poetry run alembic upgrade head && \
-    poetry run uvicorn --host=0.0.0.0 app.main:app
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+
+COPY ./main.py /code/
+
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+
 
