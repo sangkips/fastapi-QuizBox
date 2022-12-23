@@ -1,46 +1,40 @@
-version: "3.9"
+version: '3.9'
 
 services:
+
   backend:
-    image: backend
-    build:
-      context: ./app/backend
-      dockerfile: Dockerfile
-    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000
-    environment:
-      - APP_HOST=0.0.0.0
-      - APP_PORT=8000
-      - DATABASE_URL=postgresql+psycopg2://postgresquiz@mydb:5432/myapp
-   
+    build: ./services/backend
+    command: |
+      bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn src.main:app --reload --workers 1 --host 0.0.0.0 --port 8000'
     ports:
       - 8000:8000
-    
     volumes:
-      - ./app/backend:/app/backend
+      - ./app/backend:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres_quiz:postgres_quiz@db/postgres_quiz
     depends_on:
       - db
   
   frontend:
-    image: frontend
     build:
-      context: ./app/frontend
-      dockerfile: Dockerfile
+      context: ./services/frontend
     ports:
       - 8080:80
     command: npm run serve
     volumes:
       - frontend:/app
-
+  
   db:
-    image: postgres:14.5
+    image: postgres:15.1-alpine
     environment:
-      - POSTGRES_USER=postgresquiz
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=myapp
-
+      - POSTGRES_USER=postgres_quiz
+      - POSTGRES_PASSWORD=postgres_quiz
+      - POSTGRES_DB=postgres_quiz
+    expose:
+      - 5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - quiz_data:/var/lib/postgresql/data/
 
 volumes:
+  quiz_data:
   frontend:
-  postgres_data:
