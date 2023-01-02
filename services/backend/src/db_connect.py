@@ -1,6 +1,5 @@
 import os
 
-from fastapi import FastAPI
 from sqlalchemy import create_engine, MetaData
 from databases import Database
 
@@ -14,8 +13,11 @@ from sqlalchemy import (
     Boolean,
     Text,
     ForeignKey,
+    Enum,
 )
 from sqlalchemy.sql import func
+
+from src.routes.vote.models import Like
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -64,6 +66,16 @@ answers = Table(
     Column("user_id", Integer, ForeignKey("users.id"),
            nullable=False, index=True),
     Column("question_id", Integer, ForeignKey("questions.id"), nullable=False),
+)
+
+votes = Table(
+    "votes",
+    metadata,
+    Column("id", Integer, primary_key=True, index=True),
+    Column("user_id", Integer, index=True),
+    Column("question_id", Integer, index=True),
+    Column("answer_id", Integer, index=True),
+    Column("like", Enum(Like), index=True),
 )
 
 database = Database(DATABASE_URL)

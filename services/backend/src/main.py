@@ -5,6 +5,8 @@ from src.routes.user import users
 from src.routes.tag import tags
 from src.routes.question import questions
 from src.routes.answer import answers
+from src.routes.vote import votes
+
 
 metadata.create_all(engine)
 
@@ -25,3 +27,4 @@ app.include_router(users.router, prefix="/Users", tags=["Users"])
 app.include_router(tags.router, prefix="/tags", tags=["Tags"])
 app.include_router(answers.router, prefix="/Answers", tags=["Answers"])
 app.include_router(questions.router, prefix="/Questions", tags=["Questions"])
+app.include_router(votes.router, prefix="/Votes", tags=["Votes"])

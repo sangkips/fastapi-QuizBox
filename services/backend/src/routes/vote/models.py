@@ -1,18 +1,23 @@
-
-
+import enum
 from pydantic import BaseModel
+from sqlalchemy import Enum
 
 
-class VoteBase(BaseModel):
+class VoteSchema(BaseModel):
     question_id: int | None = None
     answer_id: int | None = None
     user_id: int
     like: int
 
 
-class VoteCreate(VoteBase):
+class VoteCreate(VoteSchema):
     ...
 
 
-class Vote(VoteBase):
+class Like(enum.IntEnum):
+    down = 1
+    up = 2
+
+
+class VoteDB(VoteSchema):
     id: int

@@ -30,7 +30,7 @@ async def create_user(payload: UserCreate):
         "id": user_id,
         "email": payload.email,
         "first_name": payload.first_name,
-        "first_name": payload.first_name,
+        "last_name": payload.last_name,
         "password": payload.password,
 
     }
