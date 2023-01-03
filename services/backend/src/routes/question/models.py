@@ -6,6 +6,7 @@ class QuestionSchema(BaseModel):
     body: str
     user_id: int
     tag_id: int
+    vote_id: int
 
 
 class QuestionCreate(QuestionSchema):

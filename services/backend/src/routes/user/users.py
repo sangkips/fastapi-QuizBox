@@ -38,7 +38,7 @@ async def create_user(payload: UserCreate):
 
 
 @router.put("/{id}", response_model=UserDB)
-async def update_user(id: int, payload: UserUpdate):
+async def update_user(payload: UserUpdate, id: int = Path(..., gt=0),):
     user = await crud.get(id)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -56,7 +56,7 @@ async def update_user(id: int, payload: UserUpdate):
 
 
 @router.delete("/{id}", response_model=UserDB, status_code=status.HTTP_202_ACCEPTED)
-async def delete_user(id: int):
+async def delete_user(id: int = Path(..., gt=0),):
     user = await crud.get(id)
     if user is None:
         raise HTTPException(

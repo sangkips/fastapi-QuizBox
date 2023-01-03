@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Path
 
 from src.routes.tag import crud
 from src.routes.tag.models import TagSchema, TagDB
@@ -14,7 +14,7 @@ async def read_all_tags():
 
 
 @router.get("/{id}/", response_model=TagDB, status_code=200)
-async def read_tag(id: int):
+async def read_tag(id: int = Path(..., gt=0),):
     tag = await crud.get(id)
     if tag is None:
         raise HTTPException(status_code=404, detail="Tag not found")
@@ -35,7 +35,7 @@ async def create_tag(payload: TagSchema):
 
 
 @router.put("/{id}", response_model=TagDB)
-async def update_tag(id: int, payload: TagSchema):
+async def update_tag(payload: TagSchema, id: int = Path(..., gt=0),):
     tag = await crud.get(id)
     if tag is None:
         raise HTTPException(status_code=404, detail="Tag not found")
@@ -51,7 +51,7 @@ async def update_tag(id: int, payload: TagSchema):
 
 
 @router.delete("/{id}", response_model=TagDB, status_code=status.HTTP_202_ACCEPTED)
-async def delete_tag(id: int):
+async def delete_tag(id: int = Path(..., gt=0),):
     tag = await crud.get(id)
     if tag is None:
         raise HTTPException(
