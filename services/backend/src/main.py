@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.db_connect import engine, database, metadata
 from src.routes.user import users
@@ -11,6 +12,15 @@ from src.routes.vote import votes
 metadata.create_all(engine)
 
 app = FastAPI(title="QuizBox")
+
+# CORSHeaders
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080", "*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
